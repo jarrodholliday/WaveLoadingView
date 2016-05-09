@@ -23,15 +23,15 @@ import me.itangqi.library.R;
 public class WaveLoadingView extends View {
     /**
      * +------------------------+
-     * | wave length - 波长      |__________
+     * | wave length -      |__________
      * |   /\          |   /\   |  |
-     * |  /  \         |  /  \  | amplitude - 振幅
+     * |  /  \         |  /  \  | amplitude -
      * | /    \        | /    \ |  |
      * |/      \       |/      \|__|_______
      * |        \      /        |  |
      * |         \    /         |  |
      * |          \  /          |  |
-     * |           \/           | water level - 水位
+     * |           \/           | water level -
      * |                        |  |
      * |                        |  |
      * +------------------------+__|_______
@@ -52,7 +52,8 @@ public class WaveLoadingView extends View {
 
     public enum ShapeType {
         CIRCLE,
-        SQUARE
+        SQUARE,
+        RECTANGLE
     }
 
     // Dynamic Properties.
@@ -203,6 +204,7 @@ public class WaveLoadingView extends View {
                     canvas.drawCircle(getWidth() / 2f, getHeight() / 2f, radius, mWavePaint);
                     break;
                 case 1:
+                case 2:
                     if (borderWidth > 0) {
                         canvas.drawRect(
                                 borderWidth / 2f,
@@ -308,7 +310,11 @@ public class WaveLoadingView extends View {
         int width = measureWidth(widthMeasureSpec);
         int height = measureHeight(heightMeasureSpec);
         int imageSize = (width < height) ? width : height;
-        setMeasuredDimension(imageSize, imageSize);
+        if(mShapeType == ShapeType.RECTANGLE.ordinal()) {
+            setMeasuredDimension(width, height);
+        } else {
+            setMeasuredDimension(imageSize, imageSize);
+        }
     }
 
     private int measureWidth(int measureSpec) {
